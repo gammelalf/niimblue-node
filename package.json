@@ -1,5 +1,5 @@
 {
-  "name": "@mmote/niimblue-node",
+  "name": "niimblue-node",
   "version": "0.0.10",
   "description": "Headless clients for niimbluelib. Command line interface, simple REST server are also included.",
   "keywords": [
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/MultiMote/niimblue-node.git"
+    "url": "https://github.com/gammelalf/niimblue-node.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,7 +27,7 @@
   },
   "author": "MultiMote",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "clean-build": "yarn clean && yarn build",
     "build": "tsc --build",
