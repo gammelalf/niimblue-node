@@ -7,7 +7,7 @@ import {
 } from "@mmote/niimbluelib";
 import fs from "fs";
 import sharp from "sharp";
-import { ImageEncoder, NiimbotHeadlessBleClient, NiimbotHeadlessSerialClient } from "..";
+import { ImageEncoder,  NiimbotHeadlessSerialClient } from "..";
 import { initClient, loadImageFromFile, printImage, TransportType } from "../utils";
 import { InvalidArgumentError } from "@commander-js/extra-typings";
 
@@ -116,10 +116,7 @@ export const cliConnectAndPrintImageFile = async (path: string, options: PrintOp
 
 export const cliScan = async (options: ScanOptions) => {
   if (options.transport === "ble") {
-    const devices = await NiimbotHeadlessBleClient.scan(options.timeout);
-    for (const dev of devices) {
-      console.log(`${dev.address}: ${dev.name}`);
-    }
+    console.error("Not supported");
   } else if (options.transport === "serial") {
     const devices = await NiimbotHeadlessSerialClient.scan();
     for (const dev of devices) {

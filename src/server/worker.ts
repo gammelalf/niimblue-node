@@ -2,7 +2,6 @@ import { LabelType, NiimbotAbstractClient, PrintDirection, PrintTaskName, printT
 import { IncomingMessage } from "http";
 import sharp from "sharp";
 import { z } from "zod";
-import { NiimbotHeadlessBleClient } from "../client/headless_ble_impl";
 import { ImageEncoder } from "../image_encoder";
 import { initClient, loadImageFromBase64, loadImageFromUrl, printImage } from "../utils";
 import { readBodyJson, RestError } from "./simple_server";
@@ -150,7 +149,7 @@ export const scan = async (r: IncomingMessage) => {
   const options = await readBodyJson(r, ScanSchema);
 
   if (options.transport === "ble") {
-    return { devices: await NiimbotHeadlessBleClient.scan(options.timeout) };
+    return { devices: [] };
   } else if (options.transport === "serial") {
     return { devices: await NiimbotHeadlessSerialClient.scan() };
   }

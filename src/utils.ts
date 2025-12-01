@@ -1,20 +1,20 @@
 import {
-  AbstractPrintTask,
-  EncodedImage,
-  LabelType,
-  NiimbotAbstractClient,
-  PacketReceivedEvent,
-  PacketSentEvent,
-  PrintProgressEvent,
-  PrintTaskName,
-  RequestCommandId,
-  ResponseCommandId,
-  Utils,
+    AbstractPrintTask,
+    EncodedImage, HeartbeatFailedEvent,
+    LabelType,
+    NiimbotAbstractClient,
+    PacketReceivedEvent,
+    PacketSentEvent,
+    PrintProgressEvent,
+    PrintTaskName,
+    RequestCommandId,
+    ResponseCommandId,
+    Utils,
 } from "@mmote/niimbluelib";
 import fs from "fs";
 import sharp from "sharp";
 import { Readable } from "stream";
-import { NiimbotHeadlessBleClient, NiimbotHeadlessSerialClient } from ".";
+import { NiimbotHeadlessSerialClient } from ".";
 
 export type TransportType = "serial" | "ble";
 
@@ -30,8 +30,7 @@ export const initClient = (transport: TransportType, address: string, debug: boo
     client = new NiimbotHeadlessSerialClient();
     client.setPort(address);
   } else if (transport === "ble") {
-    client = new NiimbotHeadlessBleClient();
-    client.setAddress(address);
+      throw new Error("Bluetooth not supported");
   } else {
     throw new Error("Invalid transport");
   }
@@ -40,7 +39,7 @@ export const initClient = (transport: TransportType, address: string, debug: boo
     console.log(`Page ${e.page}/${e.pagesTotal}, Page print ${e.pagePrintProgress}%, Page feed ${e.pageFeedProgress}%`);
   });
 
-  client.on("heartbeatfailed", (e) => {
+  client.on("heartbeatfailed", (e: HeartbeatFailedEvent) => {
     const maxFails = 5;
     console.warn(`Heartbeat failed ${e.failedAttempts}/${maxFails}`);
 
