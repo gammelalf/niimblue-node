@@ -52,8 +52,6 @@ export class NiimbotHeadlessSerialClient extends NiimbotAbstractClient {
 
     const _port: SerialPort = await serialOpenAsync(this.portName);
 
-    this.isOpen = true;
-
     _port.on("close", () => {
       this.isOpen = false;
       this.emit("disconnect", new DisconnectEvent());
@@ -65,13 +63,9 @@ export class NiimbotHeadlessSerialClient extends NiimbotAbstractClient {
 
     this.device = _port;
 
-    try {
-      await this.initialNegotiate();
-      await this.fetchPrinterInfo();
-    } catch (e) {
-      console.error("Unable to fetch printer info (is it turned on?).");
-      console.error(e);
-    }
+    await this.initialNegotiate();
+    await this.fetchPrinterInfo();
+    this.isOpen = true;
 
     const result: ConnectionInfo = {
       deviceName: `Serial (${this.portName})`,
