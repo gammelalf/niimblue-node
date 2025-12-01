@@ -69,8 +69,9 @@ export class NiimbotHeadlessSerialClient extends NiimbotAbstractClient {
       await this.initialNegotiate();
       await this.fetchPrinterInfo();
     } catch (e) {
-      console.error("Unable to fetch printer info (is it turned on?).");
-      console.error(e);
+      this.isOpen = false;
+      await this.disconnect();
+      throw e;
     }
 
     const result: ConnectionInfo = {

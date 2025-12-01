@@ -66,7 +66,12 @@ export const connect = async (r: IncomingMessage) => {
   }
 
   client = initClient(data.transport, data.address, debug);
-  await client.connect();
+  try {
+    await client.connect();
+  } catch (e) {
+    console.error(e);
+    throw new RestError("Failed to connect");
+  }
 
   return { message: "Connected" };
 };
