@@ -114,6 +114,7 @@ export class SimpleServer {
       writeObj(response, result, 200);
 
     } catch (e) {
+      console.log(e);
       if (e instanceof z.ZodError) {
         const error = e.issues.map((i) => `${i.path.join("→")}: ${i.message}`).join("\n");
         writeObj(response, { error }, 400);
